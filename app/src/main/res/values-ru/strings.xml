@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Мое приложение</string>
+    <string name="app_name">НМедиа</string>
     <string name="hello">НМедиа</string>
-
+    <string name="description_post_author_avatar" >Аватарка поста</string>
+    <string name="description_post_menu" >Меню поста</string>
+    <string name="description_post_love" >Колличество лайков</string>
+    <string name="description_post_messages" >Сообщения поста</string>
+    <string name="description_post_view" >Просмотры поста</string>
+    <string name="description_post_share" >Колличество сообщений, которыми поделились </string>
 </resources>
