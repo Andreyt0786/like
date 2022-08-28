@@ -5,30 +5,56 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.Nmedia.Post
 import ru.netology.Nmedia.R
-import ru.netology.Nmedia.countEveryThing
+
 
 class PostRepositoryInMemoryImp : PostRepository {
-    private var post = Post(
-        id = 1,
-        author = "Нетология. Университет интернет-профессий будущего",
-        content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netolo.gy/fyb\"",
-        published = " 21 мая в 18:36",
-        likedByMe = false,
-        likeCount = 0
-    )
-
-    private val data = MutableLiveData(post)
-    override fun get(): LiveData<Post> = data
-    override fun like() {
-        post = post.copy(likedByMe = !post.likedByMe)
-        if (post.likedByMe) post.likeCount++ else post.likeCount--
-        post = post.copy(likeCount = post.likeCount)
-        data.value = post
+    private var posts = List(500) {
+        Post(
+            id = it.toLong(),
+            author = "Университет интернет-профессий будущего. Нетология. ",
+            content = "# Поста $it Привет, это новая Нетология!",
+            published = " 21 мая в 18:36",
+            likedByMe = false,
+            likeCount = 0
+        )
     }
 
-    override fun sendMessage() {
-        post.numberShare++
-        post = post.copy(numberShare = post.numberShare)
-        data.value = post
+    private val data = MutableLiveData(posts)
+    override fun get(): LiveData<List<Post>> = data
+    override fun sendMessage(id: Long) {
+        posts = posts.map { post ->
+            if (post.id == id) {
+                post.numberShare++
+                post.copy(numberShare = post.numberShare)
+            } else {
+                post
+            }
+        }
+        data.value = posts
+    }
+
+    override fun likeById(id: Long) {
+        posts = posts.map { post ->
+            if (post.id == id) {
+                post.copy(likedByMe = !post.likedByMe)
+                // if (post.likedByMe) post.likeCount++ else post.likeCount--
+                //  post.copy(likeCount = post.likeCount)
+                // почему то не хотели добавляться likes... выходило черте что... а когда отдельно сделал likes
+                // все начало работать, хотя в предыдущей версии все работало
+            } else {
+                post
+            }
+        }
+        data.value = posts
+
+        posts = posts.map { post ->
+            if (post.id == id) {
+                if (post.likedByMe) post.likeCount++ else post.likeCount--
+                post.copy(likeCount = post.likeCount)
+            } else {
+                post
+            }
+        }
+        data.value = posts
     }
 }
