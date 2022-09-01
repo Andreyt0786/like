@@ -1,15 +1,17 @@
-package ru.netology.Nmedia.dataBinding.CardPostBinding
+package ru.netology.Nmedia.dataBinding.cardpostbinding
 
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.Nmedia.Post
 import ru.netology.Nmedia.R
+import ru.netology.Nmedia.Post
 import ru.netology.Nmedia.databinding.CardpostBinding
 
 
-class PostViewHolder(
+class postViewHolder(
     private val binding: CardpostBinding,
-    private val OnLikeListener: (Post) -> Unit,
-    private val OnSendMessageListener: (Post) -> Unit
+    private val onLikeListener: (Post) -> Unit,
+    private val onSendMessageListener: (Post) -> Unit,
+    private val onRemoveListener: (Post) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         with(binding) {
@@ -24,11 +26,26 @@ class PostViewHolder(
             )
 
             love.setOnClickListener {
-                OnLikeListener(post)
+                onLikeListener(post)
             }
 
             sendMessage.setOnClickListener {
-                OnSendMessageListener(post)
+                onSendMessageListener(post)
+            }
+
+            menu.setOnClickListener{
+                PopupMenu(it.context,it).apply {
+                    inflate(R.menu.option_menu)
+                    setOnMenuItemClickListener { item->
+                        when(item.itemId){
+                            R.id.remove->{
+                                onRemoveListener(post)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }.show()
             }
         }
     }

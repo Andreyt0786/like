@@ -8,4 +8,5 @@
     <string name="description_post_messages" >Сообщения поста</string>
     <string name="description_post_view" >Просмотры поста</string>
     <string name="description_post_share" >Колличество сообщений, которыми поделились </string>
+    <string name="remove" >Удалить</string>
 </resources>

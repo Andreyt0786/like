@@ -1,10 +1,9 @@
-package ru.netology.Nmedia.PostRepository
+package ru.netology.Nmedia.postrepository
 
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.Nmedia.Post
-import ru.netology.Nmedia.R
 
 
 class PostRepositoryInMemoryImp : PostRepository {
@@ -24,8 +23,7 @@ class PostRepositoryInMemoryImp : PostRepository {
     override fun sendMessage(id: Long) {
         posts = posts.map { post ->
             if (post.id == id) {
-                post.numberShare++
-                post.copy(numberShare = post.numberShare)
+                post.copy(numberShare = post.numberShare + 1)
             } else {
                 post
             }
@@ -33,21 +31,48 @@ class PostRepositoryInMemoryImp : PostRepository {
         data.value = posts
     }
 
+    override fun removeById(postId: Long) {
+        posts = posts.filter { it.id != postId }
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        if (post.id == 0L) {
+            posts = listOf(
+                post.copy(id = posts.firstOrNull()?.id ?: 1L)
+            ) + posts
+            data.value = posts
+            return
+        }
+        posts = posts.map {
+            if (it.id == post.id) {
+                it.copy(content = post.content)
+            } else {
+                it
+            }
+        }
+        data.value = posts
+    }
+
+
     override fun likeById(id: Long) {
         posts = posts.map { post ->
             if (post.id == id) {
-                post.copy(likedByMe = !post.likedByMe)
-                // if (post.likedByMe) post.likeCount++ else post.likeCount--
-                //  post.copy(likeCount = post.likeCount)
-                // почему то не хотели добавляться likes... выходило черте что... а когда отдельно сделал likes
-                // все начало работать, хотя в предыдущей версии все работало
+                post.copy(
+                    likedByMe = !post.likedByMe,
+                    likeCount = if (!post.likedByMe) {
+                        post.likeCount + 1
+                    } else {
+                        post.likeCount - 1
+                    }
+                )
             } else {
                 post
             }
         }
         data.value = posts
 
-        posts = posts.map { post ->
+        /*posts = posts.map { post ->
             if (post.id == id) {
                 if (post.likedByMe) post.likeCount++ else post.likeCount--
                 post.copy(likeCount = post.likeCount)
@@ -55,6 +80,7 @@ class PostRepositoryInMemoryImp : PostRepository {
                 post
             }
         }
-        data.value = posts
+        data.value = posts*/
     }
+
 }

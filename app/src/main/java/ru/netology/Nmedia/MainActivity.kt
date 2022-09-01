@@ -4,8 +4,9 @@ package ru.netology.Nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import ru.netology.Nmedia.ViewModel.PostViewModel
-import ru.netology.Nmedia.dataBinding.CardPostBinding.PostAdapter
+
+import ru.netology.Nmedia.viewmodel.PostViewModel
+import ru.netology.Nmedia.dataBinding.cardpostbinding.PostAdapter
 import ru.netology.Nmedia.databinding.ActivityMainBinding
 
 
@@ -18,14 +19,16 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val adapter = PostAdapter(
-            OnSendMessageListener = {
+            onSendMessageListener = {
                 viewModel.sendMessage(it.id)
             },
-            OnLikeListener = {
+            onLikeListener = {
                 viewModel.likeById(it.id)
             },
-
-            )
+            onRemoveListener = {
+                viewModel.removeById(it.id)
+            }
+        )
 
         binding.lists.adapter = adapter
         viewModel.data.observe(this) { posts ->
