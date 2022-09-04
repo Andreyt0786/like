@@ -7,4 +7,5 @@
     <string name="description_post_messages" >Post messages</string>
     <string name="description_post_view" >Post views</string>
     <string name="description_post_share" >Post share</string>
+    <string name="remove" >Remove</string>
     </resources>
