@@ -10,4 +10,5 @@ interface PostRepository{
     fun sendMessage(id: Long)
     fun removeById(postId:Long)
     fun save(post: Post)
+
 }

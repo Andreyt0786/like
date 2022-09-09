@@ -9,4 +9,6 @@
     <string name="description_post_view" >Просмотры поста</string>
     <string name="description_post_share" >Колличество сообщений, которыми поделились </string>
     <string name="remove" >Удалить</string>
+    <string name="post_hint" > Введите текст</string>
+    <string name="edit" >Редактировать</string>
 </resources>
