@@ -8,4 +8,6 @@
     <string name="description_post_view" >Post views</string>
     <string name="description_post_share" >Post share</string>
     <string name="remove" >Remove</string>
+    <string name="post_hint" >Content</string>
+    <string name="edit" >Edit</string>
     </resources>

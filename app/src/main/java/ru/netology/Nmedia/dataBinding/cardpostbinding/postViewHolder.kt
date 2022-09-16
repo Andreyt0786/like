@@ -9,9 +9,7 @@ import ru.netology.Nmedia.databinding.CardpostBinding
 
 class postViewHolder(
     private val binding: CardpostBinding,
-    private val onLikeListener: (Post) -> Unit,
-    private val onSendMessageListener: (Post) -> Unit,
-    private val onRemoveListener: (Post) -> Unit,
+    private val listener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         with(binding) {
@@ -26,11 +24,11 @@ class postViewHolder(
             )
 
             love.setOnClickListener {
-                onLikeListener(post)
+                listener.like(post)
             }
 
             sendMessage.setOnClickListener {
-                onSendMessageListener(post)
+               listener.send(post)
             }
 
             menu.setOnClickListener{
@@ -39,7 +37,11 @@ class postViewHolder(
                     setOnMenuItemClickListener { item->
                         when(item.itemId){
                             R.id.remove->{
-                                onRemoveListener(post)
+                                listener.remove(post)
+                                true
+                            }
+                            R.id.edit->{
+                                listener.edit(post)
                                 true
                             }
                             else -> false
