@@ -93,18 +93,18 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-    viewModel.edited.observe(this)
-    {
+        viewModel.edited.observe(this)
+        {
 
-        if (it.id == 0L) {
-            return@observe
-        }
-        with(binding.content) {
-            setText(it.content)
-            requestFocus()
+            if (it.id == 0L) {
+                return@observe
+            }
+            with(binding.content) {
+                setText(it.content)
+                requestFocus()
+            }
         }
     }
-}
 }
 
 
