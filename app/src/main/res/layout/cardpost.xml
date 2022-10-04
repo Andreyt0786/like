@@ -23,12 +23,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
+        style="@style/My.Nmedia"
         android:layout_width="@dimen/size48"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_menu"
         app:icon="@drawable/ic_baseline_more_vert_24"
-        style="@style/My.Nmedia"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/avatar" />
@@ -44,7 +44,7 @@
         android:text="fff"
         app:icon="@drawable/ic_baseline_like"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content" />
+        app:layout_constraintTop_toBottomOf="@id/shining" />
 
     <TextView
         android:id="@+id/numberLike"
@@ -167,5 +167,27 @@
         android:autoLink="web"
         android:text="@sample/posts.json/data/content"
         app:layout_constraintTop_toBottomOf="@id/topBarrier" />
+
+    <ImageView
+        android:id="@+id/shining"
+        android:layout_width="256dp"
+        android:layout_height="256dp"
+        android:contentDescription="@string/description_post_author_avatar"
+        android:src="@mipmap/ic_shining_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+
+    <ImageView
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_post_author_avatar"
+        android:src="@drawable/ic_baseline_play_circle_filled_24"
+        app:layout_constraintBottom_toBottomOf="@id/shining"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/shining" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

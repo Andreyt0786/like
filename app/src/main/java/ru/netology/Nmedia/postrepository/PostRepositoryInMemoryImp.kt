@@ -7,16 +7,36 @@ import ru.netology.Nmedia.Post
 
 
 class PostRepositoryInMemoryImp : PostRepository {
-    private var posts = List(500) {
+    private var posts = listOf(
         Post(
-            id = it.toLong(),
+            id = 3,
             author = "Университет интернет-профессий будущего. Нетология. ",
-            content = "# Поста $it Привет, это новая Нетология!",
+            content = "# Поста 2 Привет, это новая Нетология!",
             published = " 21 мая в 18:36",
             likedByMe = false,
-            likeCount = 0
+            likeCount = 0,
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+        ),
+        Post(
+            id = 2,
+            author = "Университет  ",
+            content = "пост под номером 2",
+            published = " 21 мая в 18:36",
+            likedByMe = false,
+            likeCount = 0,
+            video = ""
+        ),
+        Post(
+            id = 1,
+            author = "Нетология ",
+            content = "Еще один пост",
+            published = " 21 мая в 18:36",
+            likedByMe = false,
+            likeCount = 0,
+            video = null
         )
-    }.reversed()
+
+        )
 
     private val data = MutableLiveData(posts)
     override fun get(): LiveData<List<Post>> = data
@@ -37,10 +57,11 @@ class PostRepositoryInMemoryImp : PostRepository {
     }
 
     override fun save(post: Post) {
-        var nextId= posts.size
+        var nextId = posts.size
         if (post.id == 0L) {
             posts = listOf(
-                post.copy(id = nextId++.toLong(),
+                post.copy(
+                    id = nextId++.toLong(),
                     author = "Я",
                     published = "Сейчас",
                     likedByMe = false,

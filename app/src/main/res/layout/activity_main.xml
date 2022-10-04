@@ -10,10 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lists"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/input_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,54 +21,16 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@id/content"
-        android:layout_width="0dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="@string/post_hint"
-        android:importantForAutofill="no"
-        android:inputType="textImeMultiLine"
-        android:padding="@dimen/margin16dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_post"
+        app:srcCompat="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttom_send"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/input_barrier">
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    </EditText>
-
-    <ImageView
-        android:id="@+id/buttom_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin16dp"
-        android:src="@drawable/ic_baseline_send_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/content">
-
-    </ImageView>
-
-    <ImageView
-        android:id="@+id/buttom_cansel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin16dp"
-        android:src="@drawable/ic_baseline_cancel_24"
-        app:layout_constraintBottom_toTopOf="@id/buttom_send"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    </ImageView>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/input_barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="content,buttom_send,buttom_cansel">
-
-    </androidx.constraintlayout.widget.Barrier>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

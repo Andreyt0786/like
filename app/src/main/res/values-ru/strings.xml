@@ -11,4 +11,9 @@
     <string name="remove" >Удалить</string>
     <string name="post_hint" > Введите текст</string>
     <string name="edit" >Редактировать</string>
+    <string name="OK">OK</string>
+    <string name="error_empty_content">Поле должно быть заполнено</string>
+    <string name="chooser_share_post" >Послать пост</string>
+    <string name="add_post">Добавить пост</string>
+    <string name="canselEdit">Отмена</string>
 </resources>

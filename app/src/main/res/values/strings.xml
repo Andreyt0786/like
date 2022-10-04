@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">NMedia</string>
     <string name="hello">Nmedia</string>
-    <string name="description_post_author_avatar" >Post author avatar</string>
-    <string name="description_post_menu" >Post menu</string>
-    <string name="description_post_love" >Post love</string>
-    <string name="description_post_messages" >Post messages</string>
-    <string name="description_post_view" >Post views</string>
-    <string name="description_post_share" >Post share</string>
-    <string name="remove" >Remove</string>
-    <string name="post_hint" >Content</string>
-    <string name="edit" >Edit</string>
-    </resources>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="description_post_love">Post love</string>
+    <string name="description_post_messages">Post messages</string>
+    <string name="description_post_view">Post views</string>
+    <string name="description_post_share">Post share</string>
+    <string name="remove">Remove</string>
+    <string name="post_hint">Content</string>
+    <string name="edit">Edit</string>
+    <string name="OK">OK</string>
+    <string name="error_empty_content">Error_empty_content</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="add_post">Add post</string>
+    <string name="canselEdit">Cansel</string>
+</resources>
