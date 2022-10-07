@@ -1,5 +1,6 @@
 package ru.netology.Nmedia.dataBinding.cardpostbinding
 
+import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.Nmedia.R
@@ -18,26 +19,35 @@ class postViewHolder(
             published.text = post.published
             love.text = countEveryThing(post.likeCount)
             sendMessage.text = countEveryThing(post.numberShare)
-            love.isChecked=post.likedByMe
+            love.isChecked = post.likedByMe
+
+            if (post.video.isNullOrBlank()) {
+                shining.visibility = View.GONE
+                play.visibility=View.GONE
+            }
 
             love.setOnClickListener {
                 listener.like(post)
             }
 
-            sendMessage.setOnClickListener {
-               listener.send(post)
+            shining.setOnClickListener {
+                listener.play(post)
             }
 
-            menu.setOnClickListener{
-                PopupMenu(it.context,it).apply {
+            sendMessage.setOnClickListener {
+                listener.send(post)
+            }
+
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
                     inflate(R.menu.option_menu)
-                    setOnMenuItemClickListener { item->
-                        when(item.itemId){
-                            R.id.remove->{
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
                                 listener.remove(post)
                                 true
                             }
-                            R.id.edit->{
+                            R.id.edit -> {
                                 listener.edit(post)
                                 true
                             }
@@ -48,6 +58,7 @@ class postViewHolder(
             }
         }
     }
+
     fun countEveryThing(count: Int): String {
         var sum: String = ""
         when {

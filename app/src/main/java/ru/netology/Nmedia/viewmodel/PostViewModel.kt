@@ -17,26 +17,26 @@ class PostViewModel : ViewModel() {
     fun likeById(id: Long) = repository.likeById(id)
     fun sendMessage(id: Long) = repository.sendMessage(id)
     fun removeById(postId: Long) = repository.removeById(postId)
-    fun save() {
-        edited.value?.let {
-            repository.save(it)
-            edited.value = empty
-        }
-    }
 
 
-    fun changeContent(content: String) {
-        if (content == edited.value?.content) {
+    fun changeContentAndSave(content: String) {
+        val text = content.trim()
+        if (text == edited.value?.content) {
             return
         }
-        edited.value = edited.value?.copy(content = content)
+        edited.value?.let {
+            repository.save(it.copy(content = text))
+        }
+        edited.value = empty
     }
-    fun edit(post: Post){
+
+
+    fun edit(post: Post) {
 
         edited.value = post
     }
 
-    fun cansel(){
+    fun cansel() {
 
         edited.value = edited.value?.copy(content = edited.value!!.content)
     }
@@ -49,5 +49,6 @@ private val empty = Post(
     published = "",
     likeCount = 0,
     likedByMe = false,
-    numberShare = 0
+    numberShare = 0,
+    video = ""
 )

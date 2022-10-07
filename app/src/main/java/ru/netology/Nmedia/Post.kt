@@ -1,11 +1,15 @@
 package ru.netology.Nmedia
 
+import android.provider.MediaStore
+
 data class Post(
-    var id: Long,
+    val id: Long,
     val author: String,
     val content: String,
     val published: String,
     val likeCount: Int,
     val likedByMe: Boolean = false,
-    val numberShare: Int = 990
+    val numberShare: Int = 990,
+    val video: String?=""
 )
+

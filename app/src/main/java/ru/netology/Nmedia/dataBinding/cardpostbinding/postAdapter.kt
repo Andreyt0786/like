@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.ListAdapter
 import ru.netology.Nmedia.Post
 import ru.netology.Nmedia.databinding.CardpostBinding
 
+
 interface  OnInteractionListener{
     fun edit(post: Post)
     fun like(post: Post)
     fun remove(post: Post)
     fun send(post: Post)
+    fun play(post: Post)
+
 }
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean = oldItem.id == newItem.id

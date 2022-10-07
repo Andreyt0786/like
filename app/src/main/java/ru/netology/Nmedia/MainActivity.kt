@@ -1,14 +1,11 @@
 package ru.netology.Nmedia
 
 
-import android.R
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import ru.netology.Nmedia.Utils.AndroidUtils
 import ru.netology.Nmedia.dataBinding.cardpostbinding.OnInteractionListener
 import ru.netology.Nmedia.dataBinding.cardpostbinding.PostAdapter
 import ru.netology.Nmedia.databinding.ActivityMainBinding
@@ -36,9 +33,24 @@ class MainActivity : AppCompatActivity() {
                 viewModel.removeById(post.id)
             }
 
+            override fun play(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video.toString()))
+                    startActivity(intent)
+                }
+
+
             override fun send(post: Post) {
                 viewModel.sendMessage(post.id)
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+                // val shareIntent = Intent.createChooser(intent,getString(R.string.))
+                // не получается обратиться к string
+                startActivity(intent)
             }
+
 
         })
 
@@ -47,23 +59,16 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-        binding.buttomSend.setOnClickListener {
-            with(binding.content) {
-                val text = text?.toString()
-                if (text.isNullOrBlank()) {
-                    Toast.makeText(context, "Empty content is not allowed", Toast.LENGTH_SHORT)
-                        .show()
-                    return@setOnClickListener
-                }
-                viewModel.changeContent(text)
-                viewModel.save()
-                setText("")
-                clearFocus()
-                AndroidUtils.hideKeyboard(this)
-            }
+        val activityLauncher = registerForActivityResult(NewPostActivity.Contract) { text ->
+            text ?: return@registerForActivityResult
+            viewModel.changeContentAndSave(text)
         }
 
-        binding.buttomCansel.setOnClickListener {
+        binding.add.setOnClickListener {
+            activityLauncher.launch(null)
+        }
+
+        /*  binding.buttomCansel.setOnClickListener {
             with(binding.content) {
                 val text = text?.toString()
                 if (text.isNullOrBlank()) {
@@ -78,10 +83,9 @@ class MainActivity : AppCompatActivity() {
                 AndroidUtils.hideKeyboard(this)
             }
         }
-
         viewModel.edited.observe(this) {
-            if (it.id != 0L) {
-                with(binding.buttomCansel) {
+            if (it.video.isNullOrBlank()) {
+                with(binding) {
                     visibility = View.VISIBLE
                 }
             } else {
@@ -91,21 +95,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        */
 
-
-        viewModel.edited.observe(this)
-        {
-
-            if (it.id == 0L) {
+        viewModel.edited.observe(this) { post ->
+            if (post.id == 0L) {
                 return@observe
             }
-            with(binding.content) {
-                setText(it.content)
-                requestFocus()
-            }
+            activityLauncher.launch(post.content)
         }
     }
 }
+
 
 
 
