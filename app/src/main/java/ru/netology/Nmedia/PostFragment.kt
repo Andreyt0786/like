@@ -1,34 +1,31 @@
 package ru.netology.Nmedia
 
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.RequestBuilder.post
 import ru.netology.Nmedia.dataBinding.cardpostbinding.OnInteractionListener
-import ru.netology.Nmedia.dataBinding.cardpostbinding.PostAdapter
-import ru.netology.Nmedia.databinding.FragmentFeedBinding
+import ru.netology.Nmedia.dataBinding.cardpostbinding.postViewHolder
+import ru.netology.Nmedia.databinding.FragmentNewPostBinding
+import ru.netology.Nmedia.databinding.FragmentPostBinding
 import ru.netology.Nmedia.viewmodel.PostViewModel
 
-
-class FeedFragment : Fragment() {
+class PostFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentFeedBinding.inflate(inflater, container, false)
-
-
+        val binding = FragmentPostBinding.inflate(inflater, container, false)
         val viewModel by viewModels<PostViewModel>(ownerProducer = ::requireParentFragment)
-
-        val adapter = PostAdapter(object : OnInteractionListener {
+        val viewHolder = postViewHolder(binding.post, object : OnInteractionListener {
             override fun edit(post: Post) {
                 viewModel.edit(post)
             }
@@ -62,59 +59,23 @@ class FeedFragment : Fragment() {
 
         })
 
-        binding.lists.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
-        }
-
-
-
-        binding.add.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-        }
-
-
-
-        /*  binding.buttomCansel.setOnClickListener {
-            with(binding.content) {
-                val text = text?.toString()
-                if (text.isNullOrBlank()) {
-                    Toast.makeText(context, "Empty content is not allowed", Toast.LENGTH_SHORT)
-                        .show()
-                    return@setOnClickListener
-                }
-                viewModel.cansel()
-                viewModel.save()
-                setText("")
-                clearFocus()
-                AndroidUtils.hideKeyboard(this)
-            }
-        }
-        viewModel.edited.observe(this) {
-            if (it.video.isNullOrBlank()) {
-                with(binding) {
-                    visibility = View.VISIBLE
-                }
-            } else {
-                with(binding.buttomCansel) {
-                    visibility = View.GONE
-                }
-            }
-
-        }
-        */
-
-      /*  viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
+          val post = posts.find { it.id == Bundle.post} ?: run {
+                findNavController().navigateUp()
                 return@observe
             }
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-            activity Launcher.launch(post.content)
-        }*/
+        }
+        viewHolder.bind(Post(
+            id=1L,
+            author = "Университет интернет-профессий будущего. Нетология. ",
+            content = "# Поста 2 Привет, это новая Нетология!",
+            published = " 21 мая в 18:36",
+            likedByMe = false,
+            likeCount = 0,
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+        ))
         return binding.root
     }
+
+
 }
-
-
-
-

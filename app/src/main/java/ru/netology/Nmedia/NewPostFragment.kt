@@ -11,12 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
-import ru.netology.Nmedia.databinding.ActivityIntentHandlerBinding.inflate
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
+import ru.netology.Nmedia.Utils.StringArg
 import ru.netology.Nmedia.databinding.CardpostBinding.inflate
 import ru.netology.Nmedia.databinding.FragmentFeedBinding
 import ru.netology.Nmedia.databinding.FragmentFeedBinding.inflate
 import ru.netology.Nmedia.databinding.FragmentNewPostBinding
 import ru.netology.Nmedia.databinding.FragmentNewPostBinding.*
+import ru.netology.Nmedia.viewmodel.PostViewModel
 
 class NewPostFragment : Fragment() {
     override fun onCreateView(
@@ -25,21 +29,34 @@ class NewPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentNewPostBinding.inflate(inflater, container, false)
+        arguments?.textArg?.let {
+            binding.content.setText(it)
+        }
+        // arguments?.textArg?.let(binding.content::setText)
+        val viewModel by viewModels<PostViewModel>(ownerProducer = ::requireParentFragment)
 
         val text = activity?.intent?.getStringExtra(Intent.EXTRA_TEXT)
         binding.content.setText(text)
         binding.OK.setOnClickListener {
-            val content = binding.content.text.toString()
-            if (content.isEmpty()) {
-                activity?.setResult(RESULT_CANCELED)
-            } else {
-                activity?.setResult(RESULT_OK, Intent().putExtra(Intent.EXTRA_TEXT, content))
+            val text = binding.content.text.toString()
+            if (text.isNotBlank()) {
+                viewModel.changeContentAndSave(text)
             }
-            activity?.finish()
+            findNavController().navigateUp()
         }
+
+       // binding.content.setOnClickListener {
+      //      findNavController().navigate(R.id.action_feedFragment_to_postFragment)
+      //  }
         return binding.root
     }
+
+
+    companion object {
+        var Bundle.textArg by StringArg
+    }
 }
+
 /* binding.buttomCansel.setOnClickListener {
     with(binding.content) {
         val text = text?.toString()
@@ -70,7 +87,7 @@ viewModel.edited.observe(this) {
 
 }*/
 
-object Contract : ActivityResultContract<String?, String?>() {
+/*object Contract : ActivityResultContract<String?, String?>() {
     override fun createIntent(context: Context, input: String?) =
         Intent(context, NewPostFragment::class.java).putExtra(Intent.EXTRA_TEXT, input)
 
@@ -81,7 +98,7 @@ object Contract : ActivityResultContract<String?, String?>() {
             null
         }
 }
-
+*/
 
 
 
