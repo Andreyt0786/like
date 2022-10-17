@@ -8,7 +8,7 @@
     android:paddingTop="16dp"
     android:paddingRight="@dimen/margin16dp"
     android:paddingBottom="@dimen/size48"
-    tools:context=".MainActivity">
+    tools:context=".FeedFragment">
 
 
     <ImageView

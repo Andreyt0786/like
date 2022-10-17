@@ -1,17 +1,11 @@
 package ru.netology.Nmedia.viewmodel
 
-import android.R
 import android.app.Application
-import android.view.View
-import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import ru.netology.Nmedia.MainActivity
 import ru.netology.Nmedia.Post
 import ru.netology.Nmedia.postrepository.PostRepository
 import ru.netology.Nmedia.postrepository.PostRepositoryFilesImp
-import ru.netology.Nmedia.postrepository.PostRepositoryInMemoryImp
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: PostRepository = PostRepositoryFilesImp(application)
