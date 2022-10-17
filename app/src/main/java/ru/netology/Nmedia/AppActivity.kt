@@ -18,7 +18,7 @@ class AppActivity : AppCompatActivity() {
             savedInstanceState
         )
         val binding = ActivityAppBinding.inflate(layoutInflater)
-     //   setContentView(binding.root)
+        setContentView(binding.root)
 
         intent?.let {
             if (it.action != Intent.ACTION_SEND) {
@@ -38,7 +38,8 @@ class AppActivity : AppCompatActivity() {
                 return@let
             }
 
-            val navHostFragment=supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
             navHostFragment.navController.navigate(
                 R.id.action_feedFragment_to_newPostFragment,
                 Bundle().apply { textArg = text }

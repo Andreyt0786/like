@@ -36,7 +36,7 @@ class NewPostFragment : Fragment() {
         val viewModel by viewModels<PostViewModel>(ownerProducer = ::requireParentFragment)
 
         val text = activity?.intent?.getStringExtra(Intent.EXTRA_TEXT)
-        binding.content.setText(text)
+        //binding.content.setText(text) //Если что закоментировать
         binding.OK.setOnClickListener {
             val text = binding.content.text.toString()
             if (text.isNotBlank()) {
