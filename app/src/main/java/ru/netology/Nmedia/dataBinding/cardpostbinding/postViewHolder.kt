@@ -12,7 +12,7 @@ class postViewHolder(
     private val binding: CardpostBinding,
     private val listener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(post: Post) {
+    fun bind(post: List<Post>) {
         with(binding) {
             author.text = post.author
             content.text = post.content
