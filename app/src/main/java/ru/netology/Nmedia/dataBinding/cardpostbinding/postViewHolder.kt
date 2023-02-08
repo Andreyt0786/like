@@ -3,8 +3,8 @@ package ru.netology.Nmedia.dataBinding.cardpostbinding
 import android.view.View
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.Nmedia.R
 import ru.netology.Nmedia.Post
+import ru.netology.Nmedia.R
 import ru.netology.Nmedia.databinding.CardpostBinding
 
 
@@ -12,7 +12,7 @@ class postViewHolder(
     private val binding: CardpostBinding,
     private val listener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(post: List<Post>) {
+    fun bind(post: Post) {
         with(binding) {
             author.text = post.author
             content.text = post.content
@@ -29,10 +29,15 @@ class postViewHolder(
             love.setOnClickListener {
                 listener.like(post)
             }
+            // добавление новой функции для перехода в новый фрагмент
+            content.setOnClickListener {
+                listener.go(post)
+            }
 
             shining.setOnClickListener {
-                listener.play(post)
-            }
+                    listener.play(post)
+                }
+
 
             sendMessage.setOnClickListener {
                 listener.send(post)

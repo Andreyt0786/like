@@ -3,7 +3,6 @@ package ru.netology.Nmedia
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity.apply
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import ru.netology.Nmedia.NewPostFragment.Companion.textArg
 import ru.netology.Nmedia.dataBinding.cardpostbinding.OnInteractionListener
 import ru.netology.Nmedia.dataBinding.cardpostbinding.postViewHolder
-import ru.netology.Nmedia.databinding.FragmentNewPostBinding
 import ru.netology.Nmedia.databinding.FragmentPostBinding
 import ru.netology.Nmedia.viewmodel.PostViewModel
 
@@ -25,7 +23,10 @@ class PostFragment : Fragment() {
     ): View {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
         val viewModel by viewModels<PostViewModel>(ownerProducer = ::requireParentFragment)
+
         val viewHolder = postViewHolder(binding.post, object : OnInteractionListener {
+
+
             override fun edit(post: Post) {
                 viewModel.edit(post)
             }
@@ -43,6 +44,9 @@ class PostFragment : Fragment() {
                 startActivity(intent)
             }
 
+            override fun go(post: Post) {
+                TODO("Not yet implemented")
+            }
 
             override fun send(post: Post) {
                 viewModel.sendMessage(post.id)
@@ -51,45 +55,28 @@ class PostFragment : Fragment() {
                     putExtra(Intent.EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
-                // val shareIntent = Intent.createChooser(intent,getString(R.string.))
-                // не получается обратиться к string
                 startActivity(intent)
             }
         })
 
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            //val post = posts.find { it.id == posts.id } ?:run{
-            viewHolder.bind(posts)
-
+            val post = posts.find { it.id == arguments?.textArg?.toLong() } ?: run {
                 findNavController().navigateUp()
                 return@observe
             }
+            viewHolder.bind(post)
         }
-       /* viewHolder.bind(
-            Post(
-                id = 1,
-                author = "Andrey",
-                content = """
-                1
-                2
-                3
-                6
-                6
-                sf
-                f
-                f
-                df
-                sf
-                sf
-                sf
-                """.trimIndent(),
-                published = "today",
-                likeCount = 45,
-                likedByMe = false,
-                video = ""
 
-            )
-        )*/
-        return binding.root
+
+        viewModel.edited.observe(viewLifecycleOwner) { post ->
+            if (post.id == 0L) {
+                return@observe
+            }
+            findNavController().navigate(R.id.action_postFragment_to_newPostFragment,
+                Bundle().apply { textArg = post.content })
+
+        }
+             //viewHolder.bind(post)
+            return binding.root
+        }
     }
-}

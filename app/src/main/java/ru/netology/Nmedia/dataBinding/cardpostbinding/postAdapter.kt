@@ -14,6 +14,7 @@ interface  OnInteractionListener{
     fun remove(post: Post)
     fun send(post: Post)
     fun play(post: Post)
+    fun go(post:Post)
 
 }
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {

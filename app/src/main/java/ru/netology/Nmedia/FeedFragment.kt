@@ -2,15 +2,14 @@ package ru.netology.Nmedia
 
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import ru.netology.Nmedia.NewPostFragment.Companion.textArg
 import ru.netology.Nmedia.dataBinding.cardpostbinding.OnInteractionListener
 import ru.netology.Nmedia.dataBinding.cardpostbinding.PostAdapter
 import ru.netology.Nmedia.databinding.FragmentFeedBinding
@@ -42,8 +41,17 @@ class FeedFragment : Fragment() {
             }
 
             override fun play(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video.toString()))
-                startActivity(intent)
+                //попытка обработать нажатие на видео без перехода
+                /* val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video.toString()))
+                 startActivity(intent)*/
+                findNavController().navigate(R.id.action_feedFragment_to_postFragment,
+                    Bundle().apply { textArg = post.id.toString() })
+            }
+
+            // переход в новый фрагмент
+            override fun go(post: Post) {
+                findNavController().navigate(R.id.action_feedFragment_to_postFragment,
+                    Bundle().apply { textArg = post.id.toString()})
             }
 
 
@@ -68,11 +76,18 @@ class FeedFragment : Fragment() {
         }
 
 
-
         binding.add.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
+        viewModel.edited.observe(viewLifecycleOwner) { post ->
+            if (post.id == 0L) {
+                return@observe
+            }
+            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
+                Bundle().apply { textArg = post.content })
+
+        }
 
 
         /*  binding.buttomCansel.setOnClickListener {
@@ -104,13 +119,7 @@ class FeedFragment : Fragment() {
         }
         */
 
-      /*  viewModel.edited.observe(viewLifecycleOwner) { post ->
-            if (post.id == 0L) {
-                return@observe
-            }
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-            activity Launcher.launch(post.content)
-        }*/
+
         return binding.root
     }
 }

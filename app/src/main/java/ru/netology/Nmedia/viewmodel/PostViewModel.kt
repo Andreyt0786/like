@@ -16,6 +16,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun removeById(postId: Long) = repository.removeById(postId)
 
 
+
     fun changeContentAndSave(content: String) {
         val text = content.trim()
         if (text == edited.value?.content) {
