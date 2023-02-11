@@ -44,9 +44,7 @@ class PostFragment : Fragment() {
                 startActivity(intent)
             }
 
-            override fun go(post: Post) {
-                TODO("Not yet implemented")
-            }
+            override fun go(post: Post) {}
 
             override fun send(post: Post) {
                 viewModel.sendMessage(post.id)
@@ -76,7 +74,7 @@ class PostFragment : Fragment() {
                 Bundle().apply { textArg = post.content })
 
         }
-             //viewHolder.bind(post)
-            return binding.root
-        }
+        //viewHolder.bind(post)
+        return binding.root
     }
+}

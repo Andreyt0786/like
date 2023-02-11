@@ -1,11 +1,8 @@
 package ru.netology.Nmedia
 
 import android.content.Intent
-import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.Nmedia.NewPostFragment.Companion.textArg

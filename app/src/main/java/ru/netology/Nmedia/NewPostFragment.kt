@@ -31,13 +31,10 @@ class NewPostFragment : Fragment() {
 
             val text = binding.content.text.toString()
             if (text.isNotBlank()) {
-                viewModel.changeContentAndSave(text)
+                viewModel.save(text)
             }
             findNavController().navigateUp()
         }
-
-
-
 
 
         // binding.content.setOnClickListener {

@@ -67,7 +67,7 @@ class PostRepositoryFilesImp(val context: Context) : PostRepository {
 
 
 
-    override fun get(): LiveData<List<Post>> = data
+    override fun getAll(): LiveData<List<Post>> = data
     override fun sendMessage(id: Long) {
         posts = posts.map { post ->
             if (post.id == id) {
