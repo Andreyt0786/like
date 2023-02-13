@@ -1,5 +1,6 @@
-package ru.netology.Nmedia.dao
 
+ package ru.netology.Nmedia.dao
+/*
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -140,3 +141,5 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         }
     }
 }
+
+ */
