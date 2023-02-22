@@ -15,4 +15,7 @@
     <string name="chooser_share_post">Share post</string>
     <string name="add_post">Add post</string>
     <string name="canselEdit">Cansel</string>
+    <string name="channel_remote_name">Server Notification</string>
+    <string name="channel_remote_description">Notification from remote server</string>
+    <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
 </resources>
