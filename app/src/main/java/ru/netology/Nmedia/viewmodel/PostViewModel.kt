@@ -1,28 +1,25 @@
 package ru.netology.Nmedia.viewmodel
 
-import android.R
 import android.app.Application
-import android.view.View
-import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import ru.netology.Nmedia.MainActivity
 import ru.netology.Nmedia.Post
+import ru.netology.Nmedia.db.AppDb
 import ru.netology.Nmedia.postrepository.PostRepository
-import ru.netology.Nmedia.postrepository.PostRepositoryFilesImp
-import ru.netology.Nmedia.postrepository.PostRepositoryInMemoryImp
+import ru.netology.Nmedia.postrepository.PostRepositoryRoomImpl
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositoryFilesImp(application)
+    private val repository: PostRepository = PostRepositoryRoomImpl(
+        AppDb.getInstance(application).postDao
+    )
     val edited = MutableLiveData(empty)
-    val data = repository.get()
+    val data = repository.getAll()
     fun likeById(id: Long) = repository.likeById(id)
     fun sendMessage(id: Long) = repository.sendMessage(id)
     fun removeById(postId: Long) = repository.removeById(postId)
 
 
-    fun changeContentAndSave(content: String) {
+    fun save (content: String) {
         val text = content.trim()
         if (text == edited.value?.content) {
             return

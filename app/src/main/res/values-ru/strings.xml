@@ -16,4 +16,10 @@
     <string name="chooser_share_post" >Послать пост</string>
     <string name="add_post">Добавить пост</string>
     <string name="canselEdit">Отмена</string>
+    <string name="channel_remote_name">Извещение сервера</string>
+    <string name="channel_remote_description">Извещение от удаленного сервера </string>
+    <string name="notification_user_liked">Пользователь %1$s поставил лайк пользователю поста %2$s\</string>
+    <string name="catch_error">Пожалуйста обновите приложение для получения сообщения нового типа</string>
+    <string name="title_error">Необходимо обновновление приложения</string>
+    <string name="content_text_error">Пожалуйста обновите приложение</string>
 </resources>
