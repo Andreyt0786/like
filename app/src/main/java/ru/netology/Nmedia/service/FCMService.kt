@@ -113,11 +113,27 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
 
-        message.data[action]?.let {
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
-                Action.TEXT-> handleText(gson.fromJson(message.data[content], hanText::class.java))
+
+        try {
+            message.data[action]?.let {
+                /* if (Action.valueOf(it) != Action.LIKE || Action.valueOf(it) != Action.TEXT) {
+                error()
+
+            }*/
+                when (Action.valueOf(it)) {
+                    Action.LIKE ->
+                        handleLike(gson.fromJson(message.data[content], Like::class.java))
+
+                    Action.TEXT ->
+                        handleText(gson.fromJson(message.data[content], hanText::class.java))
+
+
+                }
             }
+        } catch (e: Throwable) {
+            //error()
+            //можно выдавать ошибку об обновлении
+            return
         }
     }
 
@@ -125,7 +141,7 @@ class FCMService : FirebaseMessagingService() {
         println(token)
     }
 
-    private fun handleLike(content: Like) {
+     private fun handleLike(content: Like) {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(
@@ -142,13 +158,15 @@ class FCMService : FirebaseMessagingService() {
             .notify(Random.nextInt(100_000), notification)
     }
 
-    private fun handleText(content:hanText){
+    private fun handleText(content: hanText) {
         var notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(content.title)
             .setContentText(content.minText)
-            .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(content.contentText))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(content.contentText)
+            )
             .setDefaults(Notification.DEFAULT_SOUND)
             .build()
 
@@ -156,7 +174,25 @@ class FCMService : FirebaseMessagingService() {
             .notify(Random.nextInt(100_000), notification)
 
     }
+
+    private fun error() {
+        var notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(getString(R.string.title_error))
+            .setContentText(getString(R.string.content_text_error))
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText(getString(R.string.catch_error))
+            )
+            .setDefaults(Notification.DEFAULT_SOUND)
+            .setAutoCancel(true)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
+    }
 }
+
 
 enum class Action {
     LIKE, TEXT
@@ -170,8 +206,8 @@ data class Like(
 )
 
 data class hanText(
-val authorName:String,
-val title:String,
-val contentText: String,
-val minText:String
+    val authorName: String,
+    val title: String,
+    val contentText: String,
+    val minText: String
 )
